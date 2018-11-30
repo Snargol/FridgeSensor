@@ -6,6 +6,8 @@ public class Model extends Observable{
 	private int tempInt;
 	private int tempExt;
 	private int setPoint = 15;
+	private int tempMaxValue = 25;
+	private int tempMinValue = 10;
 	private boolean doorOpen;
 	private boolean condensation;
 	private boolean riskCondensation;
@@ -20,6 +22,11 @@ public class Model extends Observable{
 		this.setChanged();
 		this.notifyObservers();
 	}
+    public void set2()
+    {
+        
+    }
+
 
 	public int getHumidity() {
 		return humidity;
@@ -85,7 +92,15 @@ public class Model extends Observable{
 		this.riskCondensation = riskCondensation;
 	}
 
-	public DB getDataBase() {
+    public int getTempMaxValue() {
+        return tempMaxValue;
+    }
+
+    public int getTempMinValue() {
+        return tempMinValue;
+    }
+
+    public DB getDataBase() {
 		return dataBase;
 	}
 

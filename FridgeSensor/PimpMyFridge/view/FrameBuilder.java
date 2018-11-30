@@ -18,7 +18,8 @@ public class FrameBuilder {
 		setGraphicsBuilder(graphicsBuilder);
 		
 	}
-	
+
+
 	public static void loadObservable(Observable observable) {
 		setObservable(observable);
 	}
