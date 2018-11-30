@@ -22,11 +22,6 @@ public class Model extends Observable{
 		this.setChanged();
 		this.notifyObservers();
 	}
-    public void set2()
-    {
-        
-    }
-
 
 	public int getHumidity() {
 		return humidity;
