@@ -53,7 +53,7 @@ public class FrameBuilder {
 	
 	private static JPanel createDatasPanel() {
 		JPanel p = new JPanel();
-		p.setPreferredSize(new Dimension(400,530));
+		p.setPreferredSize(new Dimension(400,600));
 		p.setBackground(Color.BLUE);
 		
 		p.add(createDisplayTemp(),BorderLayout.NORTH);
@@ -98,11 +98,13 @@ public class FrameBuilder {
 		JPanel p = new JPanel();
 		//p.setLayout(new BorderLayout(5,5));
 		p.setBackground(Color.BLUE);
-		p.setPreferredSize(new Dimension(400,500));
+		p.setPreferredSize(new Dimension(400,600));
 		
 		
 		p.add(createCurvesDisplay());
+		p.add(createCheckBoxPanel());
 		p.add(createLegendDisplay());
+		
 		return p;
 	}
 	
@@ -115,13 +117,29 @@ public class FrameBuilder {
 		return p;
 	}
 	
-	private static JPanel createLegendDisplay() {
+	private static JPanel createCheckBoxPanel() {
 		JPanel p = new JPanel();
 		p.setBackground(Color.YELLOW);
+		p.setPreferredSize(new Dimension(350,50));
+		return p;
+	}
+	
+	
+	private static JPanel createLegendDisplay() {
+		JPanel p = new JPanel();
+		Icon icon = new ImageIcon("Ressources/Legend.png");
+		JLabel labelLegend = new JLabel();
+		labelLegend.setIcon(icon);
+		
+		p.setBackground(Color.WHITE);
 		p.setPreferredSize(new Dimension(350,150));
-		p.add(createLegend1());
-		p.add(createLegend2());
-		p.add(createLegend3());
+		p.add(labelLegend);
+		
+		
+		
+//		p.add(createLegend1());
+//		p.add(createLegend2());
+//		p.add(createLegend3());
 		return p;
 	}
 	
