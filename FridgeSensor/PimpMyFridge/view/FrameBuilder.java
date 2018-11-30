@@ -6,8 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.Observable;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class FrameBuilder {
 	static Model model;
@@ -73,8 +72,9 @@ public class FrameBuilder {
 	
 	private static JPanel createSetPointManagementDisplay() {
 		JPanel p = new JPanel();
-		p.setBackground(Color.YELLOW);
 		p.setPreferredSize(new Dimension(300,125));
+        //JSlider slider = new JSlider(JSlider.HORIZONTAL,);
+
 		return p;
 	}
 	
