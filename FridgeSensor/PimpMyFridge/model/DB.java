@@ -29,7 +29,8 @@ public class DB {
 		tempInt.add(new Value((float)16.50));
 		tempInt.add(new Value((float)17.50));
 		tempInt.add(new Value((float)19.60));
-		tempInt.add(new Value((float)21.30));		
+		tempInt.add(new Value((float)21.30));	
+		
 	}
 	
 	private void createDatasTempExt() {

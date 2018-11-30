@@ -5,5 +5,6 @@
 	<classpathentry kind="src" path="FridgeSensor/PimpMyFridge/main"/>
 	<classpathentry kind="src" path="FridgeSensor/PimpMyFridge/model"/>
 	<classpathentry kind="src" path="FridgeSensor/PimpMyFridge/view"/>
+	<classpathentry kind="lib" path="D:/Users/axeld/Desktop/mfz-rxtx-2.2-20081207-win-x64/mfz-rxtx-2.2-20081207-win-x64/RXTXcomm.jar"/>
 	<classpathentry kind="output" path="FridgeSensor/PimpMyFridge/bin"/>
 </classpath>

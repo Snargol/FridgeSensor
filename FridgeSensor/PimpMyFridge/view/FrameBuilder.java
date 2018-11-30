@@ -127,7 +127,7 @@ public class FrameBuilder {
 	
 	private static JPanel createLegendDisplay() {
 		JPanel p = new JPanel();
-		Icon icon = new ImageIcon("Ressources/Legend.png");
+		Icon icon = new ImageIcon("D:\\Users\\axeld\\Documents\\GitHub\\FridgeSensor\\FridgeSensor\\PimpMyFridge\\Ressources\\Legend.png");
 		JLabel labelLegend = new JLabel();
 		labelLegend.setIcon(icon);
 		
