@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="FridgeSensor/PimpMyFridge/controller"/>
+	<classpathentry kind="src" path="FridgeSensor/PimpMyFridge/main"/>
+	<classpathentry kind="src" path="FridgeSensor/PimpMyFridge/model"/>
+	<classpathentry kind="src" path="FridgeSensor/PimpMyFridge/view"/>
+	<classpathentry kind="output" path="FridgeSensor/PimpMyFridge/bin"/>
+</classpath>
