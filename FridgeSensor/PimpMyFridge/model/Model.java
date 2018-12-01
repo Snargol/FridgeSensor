@@ -13,6 +13,7 @@ public class Model extends Observable{
 	private boolean riskCondensation;
 	private DB dataBase = new DB();
 	private GraphicCurve graphicCurve = new GraphicCurve(new Coordonate(30, 30), new Size(300,300));
+	private boolean needActualize = false;
 	
 	public Model() {
 		
@@ -101,6 +102,14 @@ public class Model extends Observable{
 
 	public GraphicCurve getGraphicCurve() {
 		return graphicCurve;
+	}
+
+	public boolean isNeedActualize() {
+		return needActualize;
+	}
+
+	public void setNeedActualize(boolean needActualize) {
+		this.needActualize = needActualize;
 	}
 
 	

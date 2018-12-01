@@ -105,13 +105,20 @@ public class CurveBuilder implements Runnable  {
 		for(int i = 0; i < datas.size()-1; i++) {
 			g2.drawLine(
 					//x of the 1st point
-					coordonateXGraph + (width / datas.size()) * i,
+					(int) (coordonateXGraph + ((float) width / datas.size()) * i),
 					//y of the 1st point
 					(int) (coordonateYGraph + height - (datas.get(i).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))),
 					//x of the 2nd point
-					coordonateXGraph + (width / datas.size()) * (i+1),
+					(int) (coordonateXGraph + ((float) width / datas.size()) * (i+1)),
 					//y of the 2nd point
 					(int) (coordonateYGraph + height - (datas.get(i+1).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))));
+		System.out.println(i);
+			if (i == datas.size()-2) {
+			
+			System.out.print(datas.size() + " - " +(int) ((((float)width / (datas.size()-1))) * (i+1))+ " : ");
+			System.out.println("--> "+ width + " / " + (datas.size()-1) + " x " + (i+1) + " --> " + (float) ((float) width / (datas.size()-1)) + " * " +(i+1) );
+			System.out.println((int) (coordonateYGraph + height - (datas.get(i).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))));
+		}
 		}
 	}
 
@@ -131,6 +138,7 @@ public class CurveBuilder implements Runnable  {
 		int sizeDatas = getModel().getDataBase().getTempInt().size();
 		ArrayList<Value> datasTempInt = getModel().getDataBase().getTempInt();
 		ArrayList<Value> datasTempExt = getModel().getDataBase().getTempExt();
+		
 		//ArrayList<Value> datasTempPeltier = getModel().getDataBase().getTempPeltier();
 
 		//draw TempExt

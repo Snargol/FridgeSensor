@@ -26,6 +26,7 @@ public class Frame extends JFrame implements Runnable {
 		this.width = width;
 		this.height = height;
 		setModel(model);
+		String test = new String();
 		
 		SwingUtilities.invokeLater(this);
 	}

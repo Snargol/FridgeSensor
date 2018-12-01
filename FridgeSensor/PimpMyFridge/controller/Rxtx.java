@@ -11,9 +11,9 @@ import java.util.Enumeration;
 
 public class Rxtx implements SerialPortEventListener {
 	SerialPort serialPort;
-	static Model model;
+	Model model;
         /** The port we're normally going to use. */
-	private static final String PORT_NAMES[] = {"COM8"// Windows
+	private static final String PORT_NAMES[] = {"COM10"// Windows
 	};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
@@ -97,35 +97,55 @@ public class Rxtx implements SerialPortEventListener {
 					for(int i =10;i<inputLine.length();i++) {
 						humidity +=inputLine.charAt(i);
 					}
-					System.out.println("humidity :"+humidity);
+					getModel().setHumidity(Integer.parseInt(humidity));
+					//System.out.println("humidity :"+humidity);
+					getModel().setNeedActualize(true);
 				}
-				if (inputLine.startsWith("temperature thermistance interieur :")) {
+				else if (inputLine.startsWith("temperature thermistance interieur :")) {
 					String interieur="";
 					for(int i =36;i<inputLine.length();i++) {
 						interieur +=inputLine.charAt(i);
 					}
-					System.out.println("temperature thermistance interieur :"+interieur);
+					getModel().getDataBase().addTempInt(new Value(Float.parseFloat(interieur)));
+					//System.out.println("temperature thermistance interieur :"+interieur);
+					getModel().setNeedActualize(true);
 				}
-				if (inputLine.startsWith("temperature thermistance exterieur :")) {
+				else if (inputLine.startsWith("temperature thermistance exterieur :")) {
 					String exterieur="";
 					for(int i =36;i<inputLine.length();i++) {
 						exterieur +=inputLine.charAt(i);
 					}
-					System.out.println("temperature thermistance exterieur :"+exterieur);
+					getModel().getDataBase().addTempExt((new Value(Float.parseFloat(exterieur))));
+					//System.out.println("temperature thermistance exterieur :"+exterieur);
+					getModel().setNeedActualize(true);
 				}
+				
 			} catch (Exception e) {
 				//System.err.println(e.toString());
 			}
 		}
 		// Ignore all the other eventTypes, but you should consider the other ones.
 	}
+	
+	public void start() {
+		initialize();
+//		Thread t = new Thread() {
+//			public void run() {
+//				//the following line will keep this app alive for 1000 seconds,
+//				//waiting for events to occur and responding to them (printing incoming messages to console).
+//				try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
+//			}
+//		};
+//		t.start();
+//		System.out.println("Started");
+	}
 
 	public Model getModel() {
 		return model;
 	}
 
-	public static void setModel(Model model1) {
-		model = model1;
+	public void setModel(Model model) {
+		this.model = model;
 	}
 	
 

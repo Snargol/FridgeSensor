@@ -2,43 +2,36 @@
 public class Controller {
 	private View view;
 	private Model model;
-	Rxtx main = new Rxtx();
-	
-	
+	Rxtx rxtx = new Rxtx();
+
+
 	public Controller(View view, Model model) {
 		setView(view);
 		setModel(model);
-		
+
 	}
-	
+
 	public void load() {
 		FrameBuilder.loadFrameBuilder(getModel(), new CurveBuilder(getModel()));
 		getView().setModelHasLoad();
-		
-		
-		main.initialize();
-		Thread t=new Thread() {
-			public void run() {
-				//the following line will keep this app alive for 1000 seconds,
-				//waiting for events to occur and responding to them (printing incoming messages to console).
-				try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
-			}
-		};
-		t.start();
-		System.out.println("Started");
-		
-		loop();
-		
+		rxtx.setModel(getModel());
+		rxtx.initialize();
 
-		
+		loop();
+
+
+
 	}
-	
+
 	private void loop() {
 		while(true) {
 			try {
-				getModel().setMobilesHavesMoved();
-				Thread.sleep(1000);
-				
+				if (getModel().isNeedActualize()) {
+					getModel().setNeedActualize(false);
+					getModel().setMobilesHavesMoved();
+				}
+				Thread.sleep(3000);
+
 
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -47,10 +40,10 @@ public class Controller {
 		}
 	}
 
-	
-	
-	
-	
+
+
+
+
 	private View getView() {
 		return view;
 	}
@@ -66,7 +59,7 @@ public class Controller {
 	private void setModel(Model model) {
 		this.model = model;
 	}
-	
-	
-	
+
+
+
 }
