@@ -12,6 +12,7 @@ public class DB {
 	private void createDatas() {
 		createDatasTempInt();
 		createDatasTempExt();
+		createDatasTempPeltier();
 	}
 	
 	private void createDatasTempInt() {
@@ -54,7 +55,17 @@ public class DB {
 		tempExt.add(new Value((float)19.53));
 		tempExt.add(new Value((float)19.42));
 		tempExt.add(new Value((float)19.30));
-		
+	}
+	
+	private void createDatasTempPeltier() {
+		tempPeltier.add(new Value((float) 12.05));
+		tempPeltier.add(new Value((float) 10.05));
+		tempPeltier.add(new Value((float) 8.05));
+		tempPeltier.add(new Value((float) 7.05));
+		tempPeltier.add(new Value((float) 6.05));
+		tempPeltier.add(new Value((float) 3.05));
+		tempPeltier.add(new Value((float) 2.05));
+		tempPeltier.add(new Value((float) 1.05));
 	}
 
 	public ArrayList<Value> getTempInt() {

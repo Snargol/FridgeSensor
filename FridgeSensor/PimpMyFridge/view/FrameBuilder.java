@@ -99,8 +99,8 @@ public class FrameBuilder {
 	private static JPanel createCurvesPanel() {
 		JPanel p = new JPanel();
 		//p.setLayout(new BorderLayout(5,5));
-		p.setBackground(Color.BLUE);
-		p.setPreferredSize(new Dimension(400,600));
+		p.setBackground(Color.WHITE);
+		p.setPreferredSize(new Dimension(600,600));
 		
 		
 		p.add(createCurvesDisplay());
@@ -113,8 +113,7 @@ public class FrameBuilder {
 	private static JPanel createCurvesDisplay() {
 		MyPanel p = new MyPanel(getGraphicsBuilder());
 		getObservable().addObserver(p);
-		p.setBackground(Color.YELLOW);
-		p.setPreferredSize(new Dimension(350,350));
+		p.setPreferredSize(new Dimension(550,350));
 		p.setCursor(new Cursor(1));
 		return p;
 	}
@@ -124,14 +123,12 @@ public class FrameBuilder {
 		p.setLayout(new GridLayout(4, 1));
 		p.setBackground(Color.WHITE);
 		p.setPreferredSize(new Dimension(350,60));
-		Checkbox interieur = new Checkbox("Température intérieure", true);
-		Checkbox exterieur = new Checkbox("Température extérieure", true);
-		Checkbox peltier = new Checkbox("Température du module peltier", true);
-		Checkbox setPoint = new Checkbox("Consigne", true);
-		p.add(interieur);
-		p.add(exterieur);
-		p.add(peltier);
-		p.add(setPoint);
+
+		p.add(getModel().exterieurCheckBox);
+		p.add(getModel().interieurCheckBox);
+		p.add(getModel().peltierCheckBox);
+		p.add(getModel().setPointCheckBox);
+
 		
 		return p;
 	}

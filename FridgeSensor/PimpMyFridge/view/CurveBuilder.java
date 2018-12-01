@@ -59,7 +59,7 @@ public class CurveBuilder implements Runnable  {
 	}
 
 	private void drawMarkerTexts(Graphics g) {
-		g.setFont(new Font("calibri",1, 17));
+		g.setFont(new Font("calibri",1, 18));
 		g.setColor(Color.black);
 		//max temperature
 		g.drawString(""+getModel().getGraphicCurve().getTempMaxValue(), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY()+10);
@@ -70,58 +70,36 @@ public class CurveBuilder implements Runnable  {
 
 	}
 
-	private void drawTempIntCurve(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		BasicStroke line = new BasicStroke(getModel().getGraphicCurve().getTempIntThickness());
-		g2.setStroke(line);
-		g2.setColor(Color.blue);
-
-		int width = getModel().getGraphicCurve().getSize().getWidth();
-		int height = getModel().getGraphicCurve().getSize().getHeight();
-		int maxTempValue = getModel().getGraphicCurve().getTempMaxValue();
-		int minTempValue = getModel().getGraphicCurve().getTempMinValue();
-		int coordonateXGraph = getModel().getGraphicCurve().getCoordonate().getX();
-		int coordonateYGraph = getModel().getGraphicCurve().getCoordonate().getY();
-		int sizeDatas = getModel().getDataBase().getTempInt().size();
-		ArrayList<Value> datas = getModel().getDataBase().getTempInt();
-
-		for(int i = 0; i < datas.size()-1; i++) {
-
-			g2.drawLine(
-					//x of the 1st point
-					coordonateXGraph + (width / sizeDatas) * i,
-					//y of the 1st point
-					//(int) (coordonateYGraph + height - height - (maxTempValue - datas.get(i).getNumber()) * (height / sizeDatas)),
-					(int) (coordonateYGraph + height - (datas.get(i).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))),
-					//x of the 2nd point
-					coordonateXGraph + (width / sizeDatas) * (i+1),
-					//y of the 2nd point
-					//					(int) (coordonateYGraph + height - height - (maxTempValue - datas.get(i+1).getNumber()) * (height / sizeDatas)));
-					(int) (coordonateYGraph + height - (datas.get(i+1).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))));
-		}
-	}
-
 	private void drawCurve(Graphics2D g2, int coordonateXGraph, int coordonateYGraph, int width, int height, int maxTempValue, int minTempValue, ArrayList<Value> datas ) {
 		for(int i = 0; i < datas.size()-1; i++) {
 			g2.drawLine(
 					//x of the 1st point
-					(int) (coordonateXGraph + ((float) width / datas.size()) * i),
+					(int) (coordonateXGraph + ((float) width / (datas.size()-1)) * i),
 					//y of the 1st point
 					(int) (coordonateYGraph + height - (datas.get(i).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))),
 					//x of the 2nd point
-					(int) (coordonateXGraph + ((float) width / datas.size()) * (i+1)),
+					(int) (coordonateXGraph + ((float) width / (datas.size()-1)) * (i+1)),
 					//y of the 2nd point
 					(int) (coordonateYGraph + height - (datas.get(i+1).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))));
 		}
 	}
 
+	private void drawSetPoint(Graphics2D g2, int coordonateXGraph, int coordonateYGraph, int width, int height, int maxTempValue, int minTempValue) {
+		g2.drawLine(
+				//x of the 1st point
+				(int) (coordonateXGraph),
+				//y of the 1st point
+				(int) (coordonateYGraph + height - (getModel().getSetPoint() - minTempValue) * (height / (maxTempValue - minTempValue))),
+				//x of the 2nd point
+				(int) (coordonateXGraph + width),
+				//y of the 2nd point
+				(int) (coordonateYGraph + height - (getModel().getSetPoint() - minTempValue) * (height / (maxTempValue - minTempValue))));
+
+	}
 
 
 	private void drawCurves(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		BasicStroke line = new BasicStroke(getModel().getGraphicCurve().getTempIntThickness());
-		g2.setStroke(line);
-		g2.setColor(Color.blue);
 
 		int width = getModel().getGraphicCurve().getSize().getWidth();
 		int height = getModel().getGraphicCurve().getSize().getHeight();
@@ -132,18 +110,43 @@ public class CurveBuilder implements Runnable  {
 		int sizeDatas = getModel().getDataBase().getTempInt().size();
 		ArrayList<Value> datasTempInt = getModel().getDataBase().getTempInt();
 		ArrayList<Value> datasTempExt = getModel().getDataBase().getTempExt();
-		
-		//ArrayList<Value> datasTempPeltier = getModel().getDataBase().getTempPeltier();
+		ArrayList<Value> datasTempPeltier = getModel().getDataBase().getTempPeltier();
+
+		BasicStroke line;
+
+		//draw setPoint
+		if (getModel().isNeedToDrawTempSetPoint()) {
+			g2.setColor(Color.GREEN);
+			line = new BasicStroke(getModel().getGraphicCurve().getSetPointThickness());
+			g2.setStroke(line);
+			drawSetPoint(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue);
+		}
 
 		//draw TempExt
-		g2.setColor(Color.RED);
-		drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempExt);
+		if (getModel().isNeedToDrawTempExt()) {
+			g2.setColor(Color.RED);
+			line = new BasicStroke(getModel().getGraphicCurve().getTempExtThickness());
+			g2.setStroke(line);
+			drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempExt);
+		}
+
+		//draw TempPeltier 
+		if (getModel().isNeedToDrawTempPeltier())
+		{
+			g2.setColor(Color.BLUE);
+			line = new BasicStroke(getModel().getGraphicCurve().getTempExtThickness());
+			g2.setStroke(line);
+			drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempPeltier);
+		}
 
 		//draw TempInt
-		g2.setColor(Color.BLUE);
-		drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempInt);
-		
-		
+		if (getModel().isNeedToDrawTempInt()) {
+			g2.setColor(Color.DARK_GRAY);
+			line = new BasicStroke(getModel().getGraphicCurve().getTempIntThickness());
+			g2.setStroke(line);
+			drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempInt);
+		}
+
 
 	}
 

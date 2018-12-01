@@ -13,9 +13,11 @@ public class Controller {
 
 	public void load() {
 		FrameBuilder.loadFrameBuilder(getModel(), new CurveBuilder(getModel()));
-		getView().setModelHasLoad();
 		rxtx.setModel(getModel());
 		rxtx.initialize();
+		CurvesManagement.setModel(getModel());
+		getView().setModelHasLoad();
+		
 
 		loop();
 
@@ -26,11 +28,9 @@ public class Controller {
 	private void loop() {
 		while(true) {
 			try {
-				if (getModel().isNeedActualize()) {
-					getModel().setNeedActualize(false);
-					getModel().setMobilesHavesMoved();
-				}
-				Thread.sleep(3000);
+				getModel().setMobilesHavesMoved();
+				CurvesManagement.checkCurvesToDraw();
+				Thread.sleep(100);
 
 
 			} catch (InterruptedException e) {

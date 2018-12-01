@@ -99,7 +99,7 @@ public class Rxtx implements SerialPortEventListener {
 					}
 					getModel().setHumidity(Integer.parseInt(humidity));
 					//System.out.println("humidity :"+humidity);
-					getModel().setNeedActualize(true);
+					//getModel().setNeedActualize(true);
 				}
 				else if (inputLine.startsWith("temperature thermistance interieur :")) {
 					String interieur="";
@@ -108,7 +108,7 @@ public class Rxtx implements SerialPortEventListener {
 					}
 					getModel().getDataBase().addTempInt(new Value(Float.parseFloat(interieur)));
 					//System.out.println("temperature thermistance interieur :"+interieur);
-					getModel().setNeedActualize(true);
+					//getModel().setNeedActualize(true);
 				}
 				else if (inputLine.startsWith("temperature thermistance exterieur :")) {
 					String exterieur="";
@@ -117,7 +117,7 @@ public class Rxtx implements SerialPortEventListener {
 					}
 					getModel().getDataBase().addTempExt((new Value(Float.parseFloat(exterieur))));
 					//System.out.println("temperature thermistance exterieur :"+exterieur);
-					getModel().setNeedActualize(true);
+					//getModel().setNeedActualize(true);
 				}
 				
 			} catch (Exception e) {

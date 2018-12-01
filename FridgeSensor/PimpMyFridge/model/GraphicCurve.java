@@ -6,10 +6,10 @@ public class GraphicCurve {
 	private float tempIntThickness = 3.0f; 
 	private float tempExtThickness = 3.0f;
 	private float tempPeltierThickness = 3.0f;
-	private float setPointThickness = 3.0f;
+	private float setPointThickness = 4.0f;
 	
-	private int tempMaxValue = 25;
-	private int tempMinValue = 10;
+	private int tempMaxValue = 30;
+	private int tempMinValue = 0;
 	
 	public GraphicCurve(Coordonate coordonate, Size size) {
 		setCoordonate(coordonate);

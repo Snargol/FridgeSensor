@@ -1,3 +1,4 @@
+import java.awt.Checkbox;
 import java.util.Observable;
 
 public class Model extends Observable{
@@ -12,8 +13,16 @@ public class Model extends Observable{
 	private boolean condensation;
 	private boolean riskCondensation;
 	private DB dataBase = new DB();
-	private GraphicCurve graphicCurve = new GraphicCurve(new Coordonate(30, 30), new Size(300,300));
-	private boolean needActualize = false;
+	private GraphicCurve graphicCurve = new GraphicCurve(new Coordonate(30, 30), new Size(500,300));
+	//private boolean needActualize = false;
+	private boolean needToDrawTempInt = true;
+	private boolean needToDrawTempExt = true;
+	private boolean needToDrawTempPeltier = true;
+	private boolean needToDrawTempSetPoint = true;
+	Checkbox interieurCheckBox = new Checkbox("Température intérieure", true);
+	Checkbox exterieurCheckBox = new Checkbox("Température extérieure", true);
+	Checkbox peltierCheckBox = new Checkbox("Température du module peltier", true);
+	Checkbox setPointCheckBox = new Checkbox("Consigne", true);
 	
 	public Model() {
 		
@@ -104,16 +113,61 @@ public class Model extends Observable{
 		return graphicCurve;
 	}
 
-	public boolean isNeedActualize() {
-		return needActualize;
+//	public boolean isNeedActualize() {
+//		return needActualize;
+//	}
+//
+//	public void setNeedActualize(boolean needActualize) {
+//		this.needActualize = needActualize;
+//	}
+
+	public boolean isNeedToDrawTempInt() {
+		return needToDrawTempInt;
 	}
 
-	public void setNeedActualize(boolean needActualize) {
-		this.needActualize = needActualize;
+	public void setNeedToDrawTempInt(boolean needToDrawTempInt) {
+		this.needToDrawTempInt = needToDrawTempInt;
 	}
 
-	
-	
+	public boolean isNeedToDrawTempExt() {
+		return needToDrawTempExt;
+	}
+
+	public void setNeedToDrawTempExt(boolean needToDrawTempExt) {
+		this.needToDrawTempExt = needToDrawTempExt;
+	}
+
+	public boolean isNeedToDrawTempPeltier() {
+		return needToDrawTempPeltier;
+	}
+
+	public void setNeedToDrawTempPeltier(boolean needToDrawTempPeltier) {
+		this.needToDrawTempPeltier = needToDrawTempPeltier;
+	}
+
+	public boolean isNeedToDrawTempSetPoint() {
+		return needToDrawTempSetPoint;
+	}
+
+	public void setNeedToDrawTempSetPoint(boolean needToDrawTempSetPoint) {
+		this.needToDrawTempSetPoint = needToDrawTempSetPoint;
+	}
+
+	public Checkbox getInterieurCheckBox() {
+		return interieurCheckBox;
+	}
+
+	public Checkbox getExterieurCheckBox() {
+		return exterieurCheckBox;
+	}
+
+	public Checkbox getPeltierCheckBox() {
+		return peltierCheckBox;
+	}
+
+	public Checkbox getSetPointCheckBox() {
+		return setPointCheckBox;
+	}
 	
 	
 }
