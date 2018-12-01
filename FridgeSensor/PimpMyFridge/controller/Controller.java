@@ -30,6 +30,7 @@ public class Controller {
 			try {
 				getModel().setMobilesHavesMoved();
 				CurvesManagement.checkCurvesToDraw();
+				actualizeJPanelObserver();
 				Thread.sleep(100);
 
 
@@ -39,10 +40,19 @@ public class Controller {
 			}
 		}
 	}
-
-
-
-
+	
+	private void actualizeJPanelObserver() {
+		actualizeTempPanel();
+		actualizeHygrometryPanel();
+	}
+	
+	private void actualizeTempPanel() {
+		getModel().getTempLabel().setText("Température du frigo : "+getModel().getTempInt());
+	}
+	
+	private void actualizeHygrometryPanel() {
+		getModel().getCondensationLabel().setText("Hygrométrie actuelle : "+getModel().getHumidity());
+	}
 
 	private View getView() {
 		return view;

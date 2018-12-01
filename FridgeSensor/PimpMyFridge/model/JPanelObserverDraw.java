@@ -5,11 +5,11 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
 
-public class MyPanel extends JPanel implements Observer{
+public class JPanelObserverDraw extends JPanel implements Observer{
 	private static final long serialVersionUID = 1L;
 	private final CurveBuilder graphicsBuilder;
 	
-	public MyPanel(CurveBuilder graphicsBuilder) {
+	public JPanelObserverDraw(CurveBuilder graphicsBuilder) {
 		this.graphicsBuilder = graphicsBuilder;
 	}
 	

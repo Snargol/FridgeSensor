@@ -1,19 +1,21 @@
 import java.awt.Checkbox;
 import java.util.Observable;
 
+import javax.swing.JLabel;
+
 public class Model extends Observable{
-	private int humidity;
-	private int tempPeltier;
-	private int tempInt;
-	private int tempExt;
-	private int setPoint = 15;
+	private float humidity;
+	private float tempPeltier;
+	private float tempInt;
+	private float tempExt;
+	private float setPoint = 15;
 	private int tempMaxValue = 25;
 	private int tempMinValue = 10;
 	private boolean doorOpen;
 	private boolean condensation;
 	private boolean riskCondensation;
 	private DB dataBase = new DB();
-	private GraphicCurve graphicCurve = new GraphicCurve(new Coordonate(30, 30), new Size(500,300));
+	private GraphicCurve graphicCurve = new GraphicCurve(new Coordonate(30, 30), new Size(500,350));
 	//private boolean needActualize = false;
 	private boolean needToDrawTempInt = true;
 	private boolean needToDrawTempExt = true;
@@ -23,6 +25,10 @@ public class Model extends Observable{
 	Checkbox exterieurCheckBox = new Checkbox("Température extérieure", true);
 	Checkbox peltierCheckBox = new Checkbox("Température du module peltier", true);
 	Checkbox setPointCheckBox = new Checkbox("Consigne", true);
+	JLabel tempLabel = new JLabel();
+	JLabel setPointLabel = new JLabel();
+	JLabel condensationLabel = new JLabel();
+	JLabel doorOpenLabel = new JLabel();
 	
 	public Model() {
 		
@@ -33,43 +39,46 @@ public class Model extends Observable{
 		this.notifyObservers();
 	}
 
-	public int getHumidity() {
+	public float getHumidity() {
 		return humidity;
 	}
 
-	public void setHumidity(int humidity) {
+	public void setHumidity(float humidity) {
 		this.humidity = humidity;
 	}
 
-	public int getTempPeltier() {
+	public float getTempPeltier() {
 		return tempPeltier;
 	}
 
-	public void setTempPeltier(int tempPeltier) {
+	public void setTempPeltier(float tempPeltier) {
 		this.tempPeltier = tempPeltier;
+		getDataBase().addTempPeltier(new Value(tempPeltier));
 	}
 
-	public int getTempInt() {
+	public float getTempInt() {
 		return tempInt;
 	}
 
-	public void setTempInt(int tempInt) {
-		this.tempInt = tempInt;
+	public void setTempInt(float f) {
+		this.tempInt = f;
+		getDataBase().addTempInt(new Value(f));
 	}
 
-	public int getTempExt() {
+	public float getTempExt() {
 		return tempExt;
 	}
 
-	public void setTempExt(int tempExt) {
+	public void setTempExt(float tempExt) {
 		this.tempExt = tempExt;
+		getDataBase().addTempExt(new Value(tempExt));
 	}
 
-	public int getSetPoint() {
+	public float getSetPoint() {
 		return setPoint;
 	}
 
-	public void setSetPoint(int setPoint) {
+	public void setSetPoint(float setPoint) {
 		this.setPoint = setPoint;
 	}
 
@@ -168,6 +177,41 @@ public class Model extends Observable{
 	public Checkbox getSetPointCheckBox() {
 		return setPointCheckBox;
 	}
+
+	public JLabel getTempLabel() {
+		return tempLabel;
+	}
+
+	public void setTempLabel(JLabel tempLabel) {
+		this.tempLabel = tempLabel;
+	}
+
+	public JLabel getSetPointLabel() {
+		return setPointLabel;
+	}
+
+	public void setSetPointLabel(JLabel setPointLabel) {
+		this.setPointLabel = setPointLabel;
+	}
+
+	public JLabel getCondensationLabel() {
+		return condensationLabel;
+	}
+
+	public void setCondensationLabel(JLabel condensationLabel) {
+		this.condensationLabel = condensationLabel;
+	}
+
+	public JLabel getDoorOpenLabel() {
+		return doorOpenLabel;
+	}
+
+	public void setDoorOpenLabel(JLabel doorOpenLabel) {
+		this.doorOpenLabel = doorOpenLabel;
+	}
+
+
+	
 	
 	
 }

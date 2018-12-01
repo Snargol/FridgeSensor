@@ -97,27 +97,33 @@ public class Rxtx implements SerialPortEventListener {
 					for(int i =10;i<inputLine.length();i++) {
 						humidity +=inputLine.charAt(i);
 					}
-					getModel().setHumidity(Integer.parseInt(humidity));
-					//System.out.println("humidity :"+humidity);
-					//getModel().setNeedActualize(true);
+					getModel().setHumidity(Float.parseFloat(humidity));
+					
+					System.out.println("humidity :"+humidity);
 				}
 				else if (inputLine.startsWith("temperature thermistance interieur :")) {
 					String interieur="";
 					for(int i =36;i<inputLine.length();i++) {
 						interieur +=inputLine.charAt(i);
 					}
-					getModel().getDataBase().addTempInt(new Value(Float.parseFloat(interieur)));
+					getModel().setTempInt(Float.parseFloat(interieur));
 					//System.out.println("temperature thermistance interieur :"+interieur);
-					//getModel().setNeedActualize(true);
 				}
 				else if (inputLine.startsWith("temperature thermistance exterieur :")) {
 					String exterieur="";
 					for(int i =36;i<inputLine.length();i++) {
 						exterieur +=inputLine.charAt(i);
 					}
-					getModel().getDataBase().addTempExt((new Value(Float.parseFloat(exterieur))));
+					getModel().setTempExt(Float.parseFloat(exterieur));
 					//System.out.println("temperature thermistance exterieur :"+exterieur);
-					//getModel().setNeedActualize(true);
+				}
+				else if (inputLine.startsWith("temperature module peltier :")) {
+					String peltier="";
+					for(int i =36;i<inputLine.length();i++) {
+						peltier +=inputLine.charAt(i);
+					}
+					getModel().setTempPeltier(Float.parseFloat(peltier));
+					//System.out.println("temperature thermistance exterieur :"+exterieur);
 				}
 				
 			} catch (Exception e) {

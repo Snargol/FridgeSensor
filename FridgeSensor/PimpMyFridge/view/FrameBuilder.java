@@ -45,8 +45,10 @@ public class FrameBuilder {
 		//p.setLayout(new (5,5));
 		p.setPreferredSize(new Dimension(600,100));
 		
+		
 		JLabel label = new JLabel("Fridge Sensor");
 		label.setFont(new Font("Arial", Font.BOLD, 50));
+		
 		p.add(label);
 		return p;
 	}
@@ -66,30 +68,40 @@ public class FrameBuilder {
 		return p;
 	}
 	
-	private static JPanel createDisplayTemp() {
-		JPanel p = new JPanel();
+	private static JPanelObserver createDisplayTemp() {
+		JPanelObserver p = new JPanelObserver();
+		getObservable().addObserver(p);
 		p.setBackground(Color.YELLOW);
 		p.setPreferredSize(new Dimension(300,125));
+		JLabel label = getModel().getTempLabel();
+		label.setText("Température du frigo : "+getModel().getTempInt());
+		label.setFont(new Font("Arial", Font.BOLD, 15));
+		p.add(label);
 		return p;
 	}
 	
-	private static JPanel createSetPointManagementDisplay() {
-		JPanel p = new JPanel();
+	private static JPanelObserver createSetPointManagementDisplay() {
+		JPanelObserver p = new JPanelObserver();
 		p.setPreferredSize(new Dimension(300,125));
         //JSlider slider = new JSlider(JSlider.HORIZONTAL,);
 
 		return p;
 	}
 	
-	private static JPanel createHygrometryDisplay() {
-		JPanel p = new JPanel();
+	private static JPanelObserver createHygrometryDisplay() {
+		JPanelObserver p = new JPanelObserver();
+		getObservable().addObserver(p);
 		p.setBackground(Color.YELLOW);
 		p.setPreferredSize(new Dimension(300,125));
+		JLabel label = getModel().getCondensationLabel();
+		label.setText("Hygrométrie actuelle: "+getModel().getHumidity());
+		label.setFont(new Font("Arial", Font.BOLD, 15));
+		p.add(label);
 		return p;
 	}
 	
-	private static JPanel createDoorOpenDisplay() {
-		JPanel p = new JPanel();
+	private static JPanelObserver createDoorOpenDisplay() {
+		JPanelObserver p = new JPanelObserver();
 		p.setBackground(Color.YELLOW);
 		p.setPreferredSize(new Dimension(300,125));
 		return p;
@@ -104,16 +116,25 @@ public class FrameBuilder {
 		
 		
 		p.add(createCurvesDisplay());
-		p.add(createCheckBoxPanel());
-		p.add(createLegendDisplay());
+		p.add(createCurveToolPanel());
 		
 		return p;
 	}
 	
-	private static JPanel createCurvesDisplay() {
-		MyPanel p = new MyPanel(getGraphicsBuilder());
+	private static JPanel createCurveToolPanel() {
+		JPanel p = new JPanel();
+		p.setLayout(new GridLayout(3, 1));
+		p.setPreferredSize(new Dimension(550,225));
+		p.setBackground(Color.WHITE);
+		p.add(createCheckBoxPanel());
+		p.add(createLegendDisplay());
+		return p;
+	}
+	
+	private static JPanelObserverDraw createCurvesDisplay() {
+		JPanelObserverDraw p = new JPanelObserverDraw(getGraphicsBuilder());
 		getObservable().addObserver(p);
-		p.setPreferredSize(new Dimension(550,350));
+		p.setPreferredSize(new Dimension(550,410));
 		p.setCursor(new Cursor(1));
 		return p;
 	}
@@ -137,11 +158,12 @@ public class FrameBuilder {
 	private static JPanel createLegendDisplay() {
 		JPanel p = new JPanel();
 		Icon icon = new ImageIcon("Ressources\\Legend.png");
+		p.setLayout(new GridLayout(1, 1));
 		JLabel labelLegend = new JLabel();
 		labelLegend.setIcon(icon);
 		
 		p.setBackground(Color.WHITE);
-		p.setPreferredSize(new Dimension(350,150));
+		p.setPreferredSize(new Dimension(50,150));
 		p.add(labelLegend);
 		
 		return p;
