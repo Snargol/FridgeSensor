@@ -112,15 +112,9 @@ public class CurveBuilder implements Runnable  {
 					(int) (coordonateXGraph + ((float) width / datas.size()) * (i+1)),
 					//y of the 2nd point
 					(int) (coordonateYGraph + height - (datas.get(i+1).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))));
-		System.out.println(i);
-			if (i == datas.size()-2) {
-			
-			System.out.print(datas.size() + " - " +(int) ((((float)width / (datas.size()-1))) * (i+1))+ " : ");
-			System.out.println("--> "+ width + " / " + (datas.size()-1) + " x " + (i+1) + " --> " + (float) ((float) width / (datas.size()-1)) + " * " +(i+1) );
-			System.out.println((int) (coordonateYGraph + height - (datas.get(i).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue))));
-		}
 		}
 	}
+
 
 
 	private void drawCurves(Graphics g) {
@@ -148,6 +142,9 @@ public class CurveBuilder implements Runnable  {
 		//draw TempInt
 		g2.setColor(Color.BLUE);
 		drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempInt);
+		
+		
+
 	}
 
 	public Model getModel() {

@@ -1,9 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -119,15 +121,25 @@ public class FrameBuilder {
 	
 	private static JPanel createCheckBoxPanel() {
 		JPanel p = new JPanel();
-		p.setBackground(Color.YELLOW);
-		p.setPreferredSize(new Dimension(350,50));
+		p.setLayout(new GridLayout(4, 1));
+		p.setBackground(Color.WHITE);
+		p.setPreferredSize(new Dimension(350,60));
+		Checkbox interieur = new Checkbox("Température intérieure", true);
+		Checkbox exterieur = new Checkbox("Température extérieure", true);
+		Checkbox peltier = new Checkbox("Température du module peltier", true);
+		Checkbox setPoint = new Checkbox("Consigne", true);
+		p.add(interieur);
+		p.add(exterieur);
+		p.add(peltier);
+		p.add(setPoint);
+		
 		return p;
 	}
 	
 	
 	private static JPanel createLegendDisplay() {
 		JPanel p = new JPanel();
-		Icon icon = new ImageIcon("D:\\Users\\axeld\\Documents\\GitHub\\FridgeSensor\\FridgeSensor\\PimpMyFridge\\Ressources\\Legend.png");
+		Icon icon = new ImageIcon("Ressources\\Legend.png");
 		JLabel labelLegend = new JLabel();
 		labelLegend.setIcon(icon);
 		
@@ -135,30 +147,6 @@ public class FrameBuilder {
 		p.setPreferredSize(new Dimension(350,150));
 		p.add(labelLegend);
 		
-		
-		
-//		p.add(createLegend1());
-//		p.add(createLegend2());
-//		p.add(createLegend3());
-		return p;
-	}
-	
-	private static JPanel createLegend1() {
-		JPanel p = new JPanel();
-		p.setBackground(Color.GRAY);
-		p.setPreferredSize(new Dimension(300,40));
-		return p;
-	}
-	private static JPanel createLegend2() {
-		JPanel p = new JPanel();
-		p.setBackground(Color.GRAY);
-		p.setPreferredSize(new Dimension(300,40));
-		return p;
-	}
-	private static JPanel createLegend3() {
-		JPanel p = new JPanel();
-		p.setBackground(Color.GRAY);
-		p.setPreferredSize(new Dimension(300,40));
 		return p;
 	}
 	
