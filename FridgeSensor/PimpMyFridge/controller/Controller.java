@@ -20,9 +20,6 @@ public class Controller {
 		
 
 		loop();
-
-
-
 	}
 
 	private void loop() {

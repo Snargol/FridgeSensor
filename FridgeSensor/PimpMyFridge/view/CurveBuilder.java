@@ -26,9 +26,11 @@ public class CurveBuilder implements Runnable  {
 	public void applyModelToGraphic(Graphics graphics) {
 		clearScreen(graphics);
 		drawMarker(graphics);
-		drawMarkerTexts(graphics);
-		//drawTempIntCurve(graphics);
-		drawCurves(graphics);
+		if (getModel().getDataBase().getTimes().size() >= 2) {
+			drawMarkerTexts(graphics);
+			drawCurves(graphics);
+			drawPointerLine(graphics);
+		}
 	}
 
 	private void clearScreen(Graphics g) {
@@ -58,6 +60,53 @@ public class CurveBuilder implements Runnable  {
 
 	}
 
+	private void drawPointerLine(Graphics g) {
+		if (getModel().getClickCoordonate() != null && getModel().isDrawPointerLine() && getModel().isNeedToDrawTempInt()) {
+			Graphics2D g2 = (Graphics2D) g;
+
+			int width = getModel().getGraphicCurve().getSize().getWidth();
+			int height = getModel().getGraphicCurve().getSize().getHeight();
+			int maxTempValue = getModel().getGraphicCurve().getTempMaxValue();
+			int minTempValue = getModel().getGraphicCurve().getTempMinValue();
+			int coordonateXGraph = getModel().getGraphicCurve().getCoordonate().getX();
+			int coordonateYGraph = getModel().getGraphicCurve().getCoordonate().getY();
+			int sizeDatas = getModel().getDataBase().getTempInt().size();
+			int coordonatePointerX = getModel().getClickCoordonate().getX()-coordonateXGraph;
+			int coordonatePointerY = getModel().getClickCoordonate().getY();
+
+			ArrayList<Value> datasTempInt = getModel().getDataBase().getTempInt();
+			int elementToGet2 = (int) datasTempInt.get((int) Math.floor(((double) coordonatePointerX )/((float) width / (sizeDatas-1)))).getNumber();
+			int elementToGet = (int) Math.floor(coordonatePointerX / (width / (sizeDatas-1)));
+			
+			BasicStroke line = new BasicStroke(1.0f);
+			g2.setStroke(line);
+			g2.setColor(Color.LIGHT_GRAY);
+
+			if (Math.floor(((double) coordonatePointerX )/datasTempInt.size()) > 0) {
+				g2.drawLine(
+						(int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))),
+						(int)(coordonateYGraph + height),
+						(int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))),
+						(int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))));
+				
+				g2.drawLine(
+						(int)(coordonateXGraph),
+						(int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))),
+						(int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))),
+						(int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))));
+
+				if ((int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))) <= 0.75 * width)
+					g2.drawString("Température : "+ datasTempInt.get(elementToGet).getNumber(), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))), (int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))) - 15);
+				else 
+					g2.drawString("Température : "+ datasTempInt.get(elementToGet).getNumber(), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))) - 100, (int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))) - 15);
+
+				
+			}
+			
+		
+		}
+	}
+
 	private void drawMarkerTexts(Graphics g) {
 		g.setFont(new Font("calibri",1, 18));
 		g.setColor(Color.black);
@@ -67,6 +116,15 @@ public class CurveBuilder implements Runnable  {
 		g.drawString(""+(getModel().getGraphicCurve().getTempMinValue() + (getModel().getGraphicCurve().getTempMaxValue() - getModel().getGraphicCurve().getTempMinValue()) / 2), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight()/2);
 		//min temperature
 		g.drawString(""+getModel().getGraphicCurve().getTempMinValue(), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight()-5);
+
+		//time of the first measure
+		g.setFont(new Font("calibri",1, 13));
+		g.drawString(getModel().getDataBase().getTimes().get(0), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight() + 30);
+
+		//time of the last measure
+		g.setFont(new Font("calibri",1, 13));
+		g.drawString(getModel().getDataBase().getTimes().get(getModel().getDataBase().getTimes().size()-1), getModel().getGraphicCurve().getCoordonate().getX() + getModel().getGraphicCurve().getSize().getWidth() - 30,
+				getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight() + 30);
 
 	}
 
@@ -146,6 +204,7 @@ public class CurveBuilder implements Runnable  {
 			g2.setStroke(line);
 			drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempInt);
 		}
+
 
 
 	}

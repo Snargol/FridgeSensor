@@ -1,6 +1,8 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JPanel;
@@ -26,5 +28,7 @@ public class JPanelObserverDraw extends JPanel implements Observer{
 		super.paintComponent(g);
 		this.graphicsBuilder.applyModelToGraphic(g);
 	}
+
+
 	
 }

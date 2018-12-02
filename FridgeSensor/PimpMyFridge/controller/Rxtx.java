@@ -99,13 +99,14 @@ public class Rxtx implements SerialPortEventListener {
 					}
 					getModel().setHumidity(Float.parseFloat(humidity));
 					
-					System.out.println("humidity :"+humidity);
+					//System.out.println("humidity :"+humidity);
 				}
 				else if (inputLine.startsWith("temperature thermistance interieur :")) {
 					String interieur="";
 					for(int i =36;i<inputLine.length();i++) {
 						interieur +=inputLine.charAt(i);
 					}
+					getModel().getDataBase().addTime(Time.getTime(System.currentTimeMillis()));
 					getModel().setTempInt(Float.parseFloat(interieur));
 					//System.out.println("temperature thermistance interieur :"+interieur);
 				}

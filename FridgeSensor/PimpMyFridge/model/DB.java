@@ -4,6 +4,7 @@ public class DB {
 	private ArrayList<Value> tempInt = new ArrayList<>();
 	private ArrayList<Value> tempExt = new ArrayList<>();
 	private ArrayList<Value> tempPeltier = new ArrayList<>();
+	private ArrayList<String> times = new ArrayList<>();
 	
 	public DB() {
 		createDatas();
@@ -92,5 +93,12 @@ public class DB {
 		this.tempPeltier.add(tempPeltier);
 	}
 	
+	public ArrayList<String> getTimes() {
+		return times;
+	}
+
+	public void addTime(String time) {
+		this.times.add(time);
+	}
 	
 }

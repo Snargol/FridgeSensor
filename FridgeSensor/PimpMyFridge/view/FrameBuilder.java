@@ -136,6 +136,7 @@ public class FrameBuilder {
 		getObservable().addObserver(p);
 		p.setPreferredSize(new Dimension(550,410));
 		p.setCursor(new Cursor(1));
+		p.addMouseListener(new ClickListener(getModel()));
 		return p;
 	}
 	

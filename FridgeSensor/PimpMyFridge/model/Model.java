@@ -21,6 +21,9 @@ public class Model extends Observable{
 	private boolean needToDrawTempExt = true;
 	private boolean needToDrawTempPeltier = true;
 	private boolean needToDrawTempSetPoint = true;
+	private Coordonate clickCoordonate;
+	private boolean drawPointerLine = false;
+	
 	Checkbox interieurCheckBox = new Checkbox("Température intérieure", true);
 	Checkbox exterieurCheckBox = new Checkbox("Température extérieure", true);
 	Checkbox peltierCheckBox = new Checkbox("Température du module peltier", true);
@@ -210,7 +213,23 @@ public class Model extends Observable{
 		this.doorOpenLabel = doorOpenLabel;
 	}
 
+	public Coordonate getClickCoordonate() {
+		return clickCoordonate;
+	}
 
+	public void setClickCoordonate(Coordonate clickCoordonate) {
+		this.clickCoordonate = clickCoordonate;
+	}
+
+	public boolean isDrawPointerLine() {
+		return drawPointerLine;
+	}
+
+	public void setDrawPointerLine(boolean drawPointerLine) {
+		this.drawPointerLine = drawPointerLine;
+	}
+
+	
 	
 	
 	
