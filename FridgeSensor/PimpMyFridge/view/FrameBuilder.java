@@ -47,14 +47,20 @@ public class FrameBuilder {
 	/*------------------------------------------------------------------*/
 	private static JPanel createTitlePanel() {
 		JPanel p = new JPanel();
-		p.setBackground(Color.WHITE);
+		p.setBackground(new Color(72, 52, 212));
 		//p.setLayout(new (5,5));
 		p.setPreferredSize(new Dimension(600,100));
+		p.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
 		
 		
 		JLabel label = new JLabel("Fridge Sensor");
 		label.setFont(new Font("Arial", Font.BOLD, 50));
 		
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label, constraints);
 		p.add(label);
 		return p;
 	}
@@ -77,7 +83,7 @@ public class FrameBuilder {
 	private static JPanelObserver createDisplayTemp() {
 		JPanelObserver p = new JPanelObserver();
 		getObservable().addObserver(p);
-		p.setBackground(Color.LIGHT_GRAY);
+		p.setBackground(new Color(104, 109, 224));
 		p.setPreferredSize(new Dimension(300,125));
 		p.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -85,31 +91,45 @@ public class FrameBuilder {
 		JLabel label1 = new JLabel("Température du frigo");
 		label1.setFont(new Font("Arial", Font.BOLD, 20));
 		JLabel label2 = getModel().getTempLabel();
-		label2.setText(""+getModel().getTempInt()+" °C");
+		label2.setText(""+getModel().getTempInt());
 		label2.setFont(new Font("Arial", Font.BOLD, 20));
+		JLabel label3 = new JLabel ("              °C");
+		label3.setFont(new Font("Arial", Font.BOLD, 20));
+        
 		
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.fill = GridBagConstraints.CENTER;
 		p.add(label1, constraints);
+		
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.fill = GridBagConstraints.CENTER;
 		p.add(label2, constraints);
+		
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.fill = GridBagConstraints.CENTER;
+        p.add(label3, constraints);
+        
 		return p;
 	}
 	
 	private static JPanel createSetPointManagementDisplay() {
         JPanel p = new JPanel();
         p.setPreferredSize(new Dimension(300,125));
-        p.setBackground(Color.LIGHT_GRAY);
+        p.setBackground(new Color(104, 109, 224));
         int defaultValue = 15;
+        p.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
-        JLabel label = new JLabel("Réglage de la consigne :");
+        JLabel label = new JLabel("Réglage de la consigne");
         label.setFont(new Font("Arial", Font.BOLD, 20));
         JSlider slider = new JSlider(getModel().getTempMinValue(), getModel().getTempMaxValue(), defaultValue);
-        slider.setBackground(Color.lightGray);
+        slider.setBackground(new Color(104, 109, 224));
+        slider.setFont(new Font("Arial", Font.BOLD, 20));
         JLabel tempLabel = new JLabel(String.valueOf(slider.getValue()));
+        tempLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
         slider.addChangeListener(new ChangeListener() {
             @Override
@@ -119,27 +139,62 @@ public class FrameBuilder {
                 model.setSetPoint((slider.getValue()));
             }
         });
-        p.add(label);
-        p.add(tempLabel);
-        p.add(slider);
+        
+        constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.fill = GridBagConstraints.CENTER;
+        p.add(label, constraints);
+        
+        constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.fill = GridBagConstraints.CENTER;
+        p.add(slider, constraints);
+        
+        constraints.gridx = 1;
+		constraints.gridy = 2;
+		constraints.fill = GridBagConstraints.CENTER;
+        p.add(tempLabel, constraints);
+        
         return p;
     }
 	
 	private static JPanelObserver createHygrometryDisplay() {
 		JPanelObserver p = new JPanelObserver();
 		getObservable().addObserver(p);
-		p.setBackground(Color.WHITE);
+		p.setBackground(new Color(104, 109, 224));
 		p.setPreferredSize(new Dimension(300,125));
-		JLabel label = getModel().getCondensationLabel();
-		label.setText("Hygrométrie actuelle: "+getModel().getHumidity());
-		label.setFont(new Font("Arial", Font.BOLD, 15));
-		p.add(label);
+		p.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        
+        JLabel label1 = new JLabel("Hygrométrie actuelle");
+        label1.setFont(new Font("Arial", Font.BOLD, 20));
+		JLabel label2 = getModel().getCondensationLabel();
+		label2.setText(""+getModel().getHumidity());
+		label2.setFont(new Font("Arial", Font.BOLD, 20));
+		JLabel label3 = new JLabel ("              %");
+		label3.setFont(new Font("Arial", Font.BOLD, 20));
+
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label1, constraints);
+		
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label2, constraints);
+		
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label3, constraints);
+
 		return p;
 	}
 	
 	private static JPanelObserver createDoorOpenDisplay() {
 		JPanelObserver p = new JPanelObserver();
-		p.setBackground(Color.YELLOW);
+		p.setBackground(new Color(104, 109, 224));
 		p.setPreferredSize(new Dimension(300,125));
 		return p;
 	}

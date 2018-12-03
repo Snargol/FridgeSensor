@@ -48,7 +48,7 @@ public class Controller {
 	}
 	
 	private void actualizeHygrometryPanel() {
-		getModel().getCondensationLabel().setText("Hygrométrie actuelle : "+getModel().getHumidity());
+		getModel().getCondensationLabel().setText(""+getModel().getHumidity());
 	}
 
 	private View getView() {
