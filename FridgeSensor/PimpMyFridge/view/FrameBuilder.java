@@ -5,10 +5,14 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.util.Observable;
 
 import javax.swing.*;
+import javax.swing.SpringLayout.Constraints;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -73,12 +77,26 @@ public class FrameBuilder {
 	private static JPanelObserver createDisplayTemp() {
 		JPanelObserver p = new JPanelObserver();
 		getObservable().addObserver(p);
-		p.setBackground(Color.WHITE);
+		p.setBackground(Color.LIGHT_GRAY);
 		p.setPreferredSize(new Dimension(300,125));
-		JLabel label = getModel().getTempLabel();
-		label.setText("Température du frigo : "+getModel().getTempInt());
-		label.setFont(new Font("Arial", Font.BOLD, 15));
-		p.add(label);
+		p.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.fill = GridBagConstraints.CENTER;
+		
+		JLabel label1 = new JLabel("Température du frigo");
+		label1.setFont(new Font("Arial", Font.BOLD, 20));
+		
+		JLabel label2 = getModel().getTempLabel();
+		label2.setText(""+getModel().getTempInt()+" °C");
+		label2.setFont(new Font("Arial", Font.BOLD, 20));
+		p.add(label1, constraints);
+		
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label2, constraints);
 		return p;
 	}
 	

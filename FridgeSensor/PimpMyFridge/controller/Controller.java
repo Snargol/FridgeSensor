@@ -44,7 +44,7 @@ public class Controller {
 	}
 	
 	private void actualizeTempPanel() {
-		getModel().getTempLabel().setText("Température du frigo : "+getModel().getTempInt());
+		getModel().getTempLabel().setText(""+getModel().getTempInt());
 	}
 	
 	private void actualizeHygrometryPanel() {
