@@ -67,6 +67,12 @@ public class DB {
 		tempPeltier.add(new Value((float) 3.05));
 		tempPeltier.add(new Value((float) 2.05));
 		tempPeltier.add(new Value((float) 1.05));
+		tempPeltier.add(new Value((float) 2.05));
+		tempPeltier.add(new Value((float) 3.25));
+		tempPeltier.add(new Value((float) 4.85));
+		tempPeltier.add(new Value((float) 5.05));
+		tempPeltier.add(new Value((float) 9.05));
+		tempPeltier.add(new Value((float) 9.05));
 	}
 
 	public ArrayList<Value> getTempInt() {

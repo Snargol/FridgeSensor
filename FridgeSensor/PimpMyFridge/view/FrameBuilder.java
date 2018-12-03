@@ -179,6 +179,9 @@ public class FrameBuilder {
 		label2.setFont(new Font("Arial", Font.BOLD, 20));
 		JLabel label3 = new JLabel ("              %");
 		label3.setFont(new Font("Arial", Font.BOLD, 20));
+		JLabel label4 = model.getCondensationLabelAlert();
+		label4.setFont(new Font("Arial", Font.BOLD, 15));
+		label4.setForeground(Color.red);
 
 		constraints.gridx = 1;
 		constraints.gridy = 0;
@@ -195,13 +198,40 @@ public class FrameBuilder {
 		constraints.fill = GridBagConstraints.CENTER;
 		p.add(label3, constraints);
 
+		constraints.gridx = 1;
+		constraints.gridy = 2;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label4, constraints);
+		
+		
 		return p;
 	}
 	
 	private static JPanelObserver createDoorOpenDisplay() {
 		JPanelObserver p = new JPanelObserver();
+		p.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 		p.setBackground(new Color(255, 211, 96));
 		p.setPreferredSize(new Dimension(300,125));
+		
+		JLabel label1 = new JLabel("Dysfonctionnements constatés :");
+		label1.setFont(new Font("Arial", Font.BOLD, 18));
+		
+		JLabel label2 = getModel().getDoorOpenLabel();
+		label2.setFont(new Font("Arial", Font.BOLD, 15));
+		label2.setText("Aucune Anomalie");
+		label2.setForeground(new Color(18, 96, 61));
+
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label1, constraints);
+		
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label2, constraints);
+		
 		return p;
 	}
 	//------------------------------RIGHT---------------------------------

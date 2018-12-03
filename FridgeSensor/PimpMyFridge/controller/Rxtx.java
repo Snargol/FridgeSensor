@@ -92,7 +92,7 @@ public class Rxtx implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				String inputLine=input.readLine();
-				if (inputLine.startsWith("humidity :")) {
+				if (inputLine.startsWith("Humidity :")) {
 					String humidity="";
 					for(int i =10;i<inputLine.length();i++) {
 						humidity +=inputLine.charAt(i);
@@ -118,9 +118,9 @@ public class Rxtx implements SerialPortEventListener {
 					getModel().setTempExt(Float.parseFloat(exterieur));
 					//System.out.println("temperature thermistance exterieur :"+exterieur);
 				}
-				else if (inputLine.startsWith("temperature module peltier :")) {
+				else if (inputLine.startsWith("temperature thermistance Peltier :")) {
 					String peltier="";
-					for(int i =36;i<inputLine.length();i++) {
+					for(int i =34;i<inputLine.length();i++) {
 						peltier +=inputLine.charAt(i);
 					}
 					getModel().setTempPeltier(Float.parseFloat(peltier));
@@ -133,6 +133,18 @@ public class Rxtx implements SerialPortEventListener {
 		}
 		// Ignore all the other eventTypes, but you should consider the other ones.
 	}
+	
+    public void writeData(int a)
+    {
+        try
+        {
+            output.write(a);
+            output.flush();
+        }
+        catch (Exception e)
+        {
+        }
+    }
 	
 	public void start() {
 		initialize();

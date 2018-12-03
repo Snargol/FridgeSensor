@@ -31,6 +31,7 @@ public class Model extends Observable{
 	JLabel tempLabel = new JLabel();
 	JLabel setPointLabel = new JLabel();
 	JLabel condensationLabel = new JLabel();
+	JLabel condensationLabelAlert = new JLabel();
 	JLabel doorOpenLabel = new JLabel();
 	
 	public Model() {
@@ -228,8 +229,30 @@ public class Model extends Observable{
 	public void setDrawPointerLine(boolean drawPointerLine) {
 		this.drawPointerLine = drawPointerLine;
 	}
-
 	
+	
+
+	public JLabel getCondensationLabelAlert() {
+		return condensationLabelAlert;
+	}
+
+	public void setCondensationLabelAlert(JLabel condensationLabelAlert) {
+		this.condensationLabelAlert = condensationLabelAlert;
+	}
+
+	public int getDewPoint() {
+
+		float a = 17.27f;
+		float b = 237.7f;
+		float ln = (float) Math.log(getHumidity()/100);
+		float temp = getTempInt();
+//		System.out.println(
+//				(b*(((a*temp) / (b + temp)) + ln) / (a - ((a*temp) / (b + temp) + ln)))
+//				);
+		//System.out.println((int) ((237.7 * K) / (17.7-K)));
+		return (int) (b*(((a*temp) / (b + temp)) + ln) / (a - ((a*temp) / (b + temp) + ln)));
+		
+	}
 	
 	
 	
