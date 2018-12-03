@@ -199,7 +199,7 @@ public class CurveBuilder implements Runnable  {
 
 		//draw TempInt
 		if (getModel().isNeedToDrawTempInt()) {
-			g2.setColor(Color.DARK_GRAY);
+			g2.setColor(new Color(101, 97, 101));
 			line = new BasicStroke(getModel().getGraphicCurve().getTempIntThickness());
 			g2.setStroke(line);
 			drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempInt);

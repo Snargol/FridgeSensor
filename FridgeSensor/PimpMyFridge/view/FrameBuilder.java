@@ -47,8 +47,7 @@ public class FrameBuilder {
 	/*------------------------------------------------------------------*/
 	private static JPanel createTitlePanel() {
 		JPanel p = new JPanel();
-		p.setBackground(new Color(72, 52, 212));
-		//p.setLayout(new (5,5));
+		p.setBackground(new Color(255, 180, 0));
 		p.setPreferredSize(new Dimension(600,100));
 		p.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -83,7 +82,7 @@ public class FrameBuilder {
 	private static JPanelObserver createDisplayTemp() {
 		JPanelObserver p = new JPanelObserver();
 		getObservable().addObserver(p);
-		p.setBackground(new Color(104, 109, 224));
+		p.setBackground(new Color(255, 211, 96));
 		p.setPreferredSize(new Dimension(300,125));
 		p.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -118,15 +117,17 @@ public class FrameBuilder {
 	private static JPanel createSetPointManagementDisplay() {
         JPanel p = new JPanel();
         p.setPreferredSize(new Dimension(300,125));
-        p.setBackground(new Color(104, 109, 224));
+        p.setBackground(new Color(255, 211, 96));
         int defaultValue = 15;
         p.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 
-        JLabel label = new JLabel("Réglage de la consigne");
-        label.setFont(new Font("Arial", Font.BOLD, 20));
+        JLabel label1 = new JLabel("Réglage de la consigne");
+        label1.setFont(new Font("Arial", Font.BOLD, 20));
+        JLabel label2 = new JLabel ("              °C");
+        label2.setFont(new Font("Arial", Font.BOLD, 20));
         JSlider slider = new JSlider(getModel().getTempMinValue(), getModel().getTempMaxValue(), defaultValue);
-        slider.setBackground(new Color(104, 109, 224));
+        slider.setBackground(new Color(255, 211, 96));
         slider.setFont(new Font("Arial", Font.BOLD, 20));
         JLabel tempLabel = new JLabel(String.valueOf(slider.getValue()));
         tempLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -143,7 +144,7 @@ public class FrameBuilder {
         constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.fill = GridBagConstraints.CENTER;
-        p.add(label, constraints);
+        p.add(label1, constraints);
         
         constraints.gridx = 1;
 		constraints.gridy = 1;
@@ -155,13 +156,18 @@ public class FrameBuilder {
 		constraints.fill = GridBagConstraints.CENTER;
         p.add(tempLabel, constraints);
         
+        constraints.gridx = 1;
+		constraints.gridy = 2;
+		constraints.fill = GridBagConstraints.CENTER;
+        p.add(label2, constraints);
+        
         return p;
     }
 	
 	private static JPanelObserver createHygrometryDisplay() {
 		JPanelObserver p = new JPanelObserver();
 		getObservable().addObserver(p);
-		p.setBackground(new Color(104, 109, 224));
+		p.setBackground(new Color(255, 211, 96));
 		p.setPreferredSize(new Dimension(300,125));
 		p.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -194,7 +200,7 @@ public class FrameBuilder {
 	
 	private static JPanelObserver createDoorOpenDisplay() {
 		JPanelObserver p = new JPanelObserver();
-		p.setBackground(new Color(104, 109, 224));
+		p.setBackground(new Color(255, 211, 96));
 		p.setPreferredSize(new Dimension(300,125));
 		return p;
 	}
