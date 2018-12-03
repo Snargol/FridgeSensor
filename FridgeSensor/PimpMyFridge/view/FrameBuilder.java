@@ -81,18 +81,17 @@ public class FrameBuilder {
 		p.setPreferredSize(new Dimension(300,125));
 		p.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridx = 1;
-		constraints.gridy = 0;
-		constraints.fill = GridBagConstraints.CENTER;
 		
 		JLabel label1 = new JLabel("Température du frigo");
 		label1.setFont(new Font("Arial", Font.BOLD, 20));
-		
 		JLabel label2 = getModel().getTempLabel();
 		label2.setText(""+getModel().getTempInt()+" °C");
 		label2.setFont(new Font("Arial", Font.BOLD, 20));
-		p.add(label1, constraints);
 		
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.fill = GridBagConstraints.CENTER;
+		p.add(label1, constraints);
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		constraints.fill = GridBagConstraints.CENTER;
@@ -103,12 +102,13 @@ public class FrameBuilder {
 	private static JPanel createSetPointManagementDisplay() {
         JPanel p = new JPanel();
         p.setPreferredSize(new Dimension(300,125));
-        p.setBackground(Color.WHITE);
+        p.setBackground(Color.LIGHT_GRAY);
         int defaultValue = 15;
 
         JLabel label = new JLabel("Réglage de la consigne :");
+        label.setFont(new Font("Arial", Font.BOLD, 20));
         JSlider slider = new JSlider(getModel().getTempMinValue(), getModel().getTempMaxValue(), defaultValue);
-        slider.setBackground(Color.white);
+        slider.setBackground(Color.lightGray);
         JLabel tempLabel = new JLabel(String.valueOf(slider.getValue()));
 
         slider.addChangeListener(new ChangeListener() {
