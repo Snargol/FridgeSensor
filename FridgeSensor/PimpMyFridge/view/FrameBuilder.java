@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.util.Observable;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class FrameBuilder {
 	static Model model;
@@ -28,7 +30,7 @@ public class FrameBuilder {
 	
 	public static JPanel createPanels() {
 		JPanel p = new JPanel();
-		p.setBackground(Color.cyan);
+		p.setBackground(Color.WHITE);
 		p.setLayout(new BorderLayout(5,5));
 		
 		p.add(createTitlePanel(), BorderLayout.NORTH);
@@ -58,7 +60,7 @@ public class FrameBuilder {
 	private static JPanel createDatasPanel() {
 		JPanel p = new JPanel();
 		p.setPreferredSize(new Dimension(400,600));
-		p.setBackground(Color.BLUE);
+		p.setBackground(Color.WHITE);
 		
 		p.add(createDisplayTemp(),BorderLayout.NORTH);
 		p.add(createSetPointManagementDisplay(),BorderLayout.NORTH);
@@ -71,7 +73,7 @@ public class FrameBuilder {
 	private static JPanelObserver createDisplayTemp() {
 		JPanelObserver p = new JPanelObserver();
 		getObservable().addObserver(p);
-		p.setBackground(Color.YELLOW);
+		p.setBackground(Color.WHITE);
 		p.setPreferredSize(new Dimension(300,125));
 		JLabel label = getModel().getTempLabel();
 		label.setText("Température du frigo : "+getModel().getTempInt());
@@ -80,18 +82,35 @@ public class FrameBuilder {
 		return p;
 	}
 	
-	private static JPanelObserver createSetPointManagementDisplay() {
-		JPanelObserver p = new JPanelObserver();
-		p.setPreferredSize(new Dimension(300,125));
-        //JSlider slider = new JSlider(JSlider.HORIZONTAL,);
+	private static JPanel createSetPointManagementDisplay() {
+        JPanel p = new JPanel();
+        p.setPreferredSize(new Dimension(300,125));
+        p.setBackground(Color.WHITE);
+        int defaultValue = 15;
 
-		return p;
-	}
+        JLabel label = new JLabel("Réglage de la consigne :");
+        JSlider slider = new JSlider(getModel().getTempMinValue(), getModel().getTempMaxValue(), defaultValue);
+        slider.setBackground(Color.white);
+        JLabel tempLabel = new JLabel(String.valueOf(slider.getValue()));
+
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+               // System.out.println(slider.getValue());
+                tempLabel.setText(String.valueOf(slider.getValue()));
+                model.setSetPoint((slider.getValue()));
+            }
+        });
+        p.add(label);
+        p.add(tempLabel);
+        p.add(slider);
+        return p;
+    }
 	
 	private static JPanelObserver createHygrometryDisplay() {
 		JPanelObserver p = new JPanelObserver();
 		getObservable().addObserver(p);
-		p.setBackground(Color.YELLOW);
+		p.setBackground(Color.WHITE);
 		p.setPreferredSize(new Dimension(300,125));
 		JLabel label = getModel().getCondensationLabel();
 		label.setText("Hygrométrie actuelle: "+getModel().getHumidity());

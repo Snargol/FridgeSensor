@@ -9,8 +9,8 @@ public class Model extends Observable{
 	private float tempInt;
 	private float tempExt;
 	private float setPoint = 15;
-	private int tempMaxValue = 25;
-	private int tempMinValue = 10;
+	private int tempMaxValue = 30;
+	private int tempMinValue = 0;
 	private boolean doorOpen;
 	private boolean condensation;
 	private boolean riskCondensation;
