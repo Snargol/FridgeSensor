@@ -13,8 +13,8 @@ public class Rxtx implements SerialPortEventListener {
 	SerialPort serialPort;
 	Model model;
         /** The port we're normally going to use. */
-	private static final String PORT_NAMES[] = {"COM10"// Windows
-	};
+	//private static final String PORT_NAMES[] = {"COM6"// Windows
+	//};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
 	* converting the bytes into characters 
@@ -32,28 +32,31 @@ public class Rxtx implements SerialPortEventListener {
                 // the next line is for Raspberry Pi and 
                 // gets us into the while loop and was suggested here was suggested http://www.raspberrypi.org/phpBB3/viewtopic.php?f=81&t=32186
                // System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
+		CommPortIdentifier serialPortId = null;
 
-		CommPortIdentifier portId = null;
+		Enumeration enumComm;
+
+		enumComm = CommPortIdentifier.getPortIdentifiers();
+
+		while(enumComm.hasMoreElements())
+		{
+		serialPortId = (CommPortIdentifier)enumComm.nextElement();
+		if(serialPortId.getPortType() == CommPortIdentifier.PORT_SERIAL)
+		{
+		System.out.println(serialPortId.getName());
+		}
+		}
 		Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
 
 		//First, Find an instance of serial port as set in PORT_NAMES.
-		while (portEnum.hasMoreElements()) {
-			CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
-			for (String portName : PORT_NAMES) {
-				if (currPortId.getName().equals(portName)) {
-					portId = currPortId;
-					break;
-				}
-			}
-		}
-		if (portId == null) {
+		if (serialPortId == null) {
 			System.out.println("Could not find COM port.");
 			return;
 		}
 
 		try {
 			// open serial port, and use class name for the appName.
-			serialPort = (SerialPort) portId.open(this.getClass().getName(),
+			serialPort = (SerialPort) serialPortId.open(this.getClass().getName(),
 					TIME_OUT);
 
 			// set port parameters
@@ -126,7 +129,14 @@ public class Rxtx implements SerialPortEventListener {
 					getModel().setTempPeltier(Float.parseFloat(peltier));
 					//System.out.println("temperature thermistance exterieur :"+exterieur);
 				}
-				
+				 if (inputLine.startsWith("consigne :")) {
+					String consigne="";
+					for(int i =10;i<inputLine.length();i++) {
+						consigne +=inputLine.charAt(i);
+					}
+					//getModel().setTempPeltier(Float.parseFloat(peltier));
+					System.out.println("temperature thermistance consigne :"+consigne);
+				 }
 			} catch (Exception e) {
 				//System.err.println(e.toString());
 			}
@@ -140,7 +150,8 @@ public class Rxtx implements SerialPortEventListener {
         {
             output.write(a);
             output.flush();
-        }
+            //System.out.println("a :"+a);
+            }
         catch (Exception e)
         {
         }

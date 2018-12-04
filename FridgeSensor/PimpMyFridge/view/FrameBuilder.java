@@ -118,7 +118,7 @@ public class FrameBuilder {
         JPanel p = new JPanel();
         p.setPreferredSize(new Dimension(300,125));
         p.setBackground(new Color(255, 211, 96));
-        int defaultValue = 15;
+        int defaultValue = (int) getModel().getSetPoint();
         p.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
 

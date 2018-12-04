@@ -5,10 +5,6 @@
 	<classpathentry kind="src" path="main"/>
 	<classpathentry kind="src" path="model"/>
 	<classpathentry kind="src" path="view"/>
-	<classpathentry kind="lib" path="lib/RXTXcomm.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/1699267/Desktop/FridgeSensorGit/FridgeSensor/FridgeSensor/PimpMyFridge"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="D:/Users/axeld/Desktop/mfz-rxtx-2.2-20081207-win-x64/mfz-rxtx-2.2-20081207-win-x64/RXTXcomm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

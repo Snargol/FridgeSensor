@@ -30,7 +30,7 @@ public class Controller {
 				CurvesManagement.checkCurvesToDraw();
 				actualizeJPanelObserver();
 				getModel().getDewPoint();
-				//rxtx.writeData((int) getModel().getSetPoint());
+				rxtx.writeData((int) getModel().getSetPoint());
 				Thread.sleep(100);
 
 
