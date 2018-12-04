@@ -5,6 +5,7 @@ public class DB {
 	private ArrayList<Value> tempExt = new ArrayList<>();
 	private ArrayList<Value> tempPeltier = new ArrayList<>();
 	private ArrayList<String> times = new ArrayList<>();
+	private ArrayList<Value> setPoint = new ArrayList<>();
 	
 	public DB() {
 		createDatas();
@@ -106,5 +107,15 @@ public class DB {
 	public void addTime(String time) {
 		this.times.add(time);
 	}
+
+	public ArrayList<Value> getSetPoint() {
+		return setPoint;
+	}
+
+	public void addSetPoint(Value setPoint) {
+		this.setPoint.add(setPoint);
+	}
+	
+	
 	
 }

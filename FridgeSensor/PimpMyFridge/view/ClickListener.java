@@ -12,7 +12,6 @@ public class ClickListener extends MouseAdapter {
 	public void mousePressed(MouseEvent e) {
 		getModel().setDrawPointerLine(true);
 		getModel().setClickCoordonate(new Coordonate(e.getX(), e.getY()));
-		System.out.println(e.getX() + " : " + e.getY());
 	}
 	
 	@Override

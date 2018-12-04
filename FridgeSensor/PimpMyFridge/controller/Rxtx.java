@@ -109,9 +109,12 @@ public class Rxtx implements SerialPortEventListener {
 					for(int i =36;i<inputLine.length();i++) {
 						interieur +=inputLine.charAt(i);
 					}
-					getModel().getDataBase().addTime(Time.getTime(System.currentTimeMillis()));
+					
 					getModel().setTempInt(Float.parseFloat(interieur));
-					//System.out.println("temperature thermistance interieur :"+interieur);
+					getModel().setSetPoint(getModel().getSetPoint());
+					getModel().getDataBase().addSetPoint(new Value(getModel().getSetPoint()));
+					getModel().getDataBase().addTime(Time.getTime(System.currentTimeMillis()));
+					getModel().setNeedToSendSetPoint(true);
 				}
 				else if (inputLine.startsWith("temperature thermistance exterieur :")) {
 					String exterieur="";

@@ -8,8 +8,6 @@ public class GraphicCurve {
 	private float tempPeltierThickness = 3.0f;
 	private float setPointThickness = 4.0f;
 	
-	private int tempMaxValue = 30;
-	private int tempMinValue = 0;
 	
 	public GraphicCurve(Coordonate coordonate, Size size) {
 		setCoordonate(coordonate);
@@ -63,23 +61,6 @@ public class GraphicCurve {
 	public void setSetPointThickness(float setPointThickness) {
 		this.setPointThickness = setPointThickness;
 	}
-
-	public int getTempMaxValue() {
-		return tempMaxValue;
-	}
-
-	public void setTempMaxValue(int tempMaxValue) {
-		this.tempMaxValue = tempMaxValue;
-	}
-
-	public int getTempMinValue() {
-		return tempMinValue;
-	}
-
-	public void setTempMinValue(int tempMinValue) {
-		this.tempMinValue = tempMinValue;
-	}
-	
 	
 	
 }

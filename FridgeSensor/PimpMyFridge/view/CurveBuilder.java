@@ -29,7 +29,19 @@ public class CurveBuilder implements Runnable  {
 		if (getModel().getDataBase().getTimes().size() >= 2) {
 			drawMarkerTexts(graphics);
 			drawCurves(graphics);
-			drawPointerLine(graphics);
+			if (getModel().isNeedToDrawTempInt() && !getModel().isNeedToDrawTempExt() && !getModel().isNeedToDrawTempPeltier() )
+				drawPointerLine(graphics, getModel().getDataBase().getTempInt());
+			else if (!getModel().isNeedToDrawTempInt() && getModel().isNeedToDrawTempExt() && !getModel().isNeedToDrawTempPeltier() )
+				drawPointerLine(graphics, getModel().getDataBase().getTempExt());
+
+			else if (!getModel().isNeedToDrawTempInt() && !getModel().isNeedToDrawTempExt() && getModel().isNeedToDrawTempPeltier())
+				drawPointerLine(graphics, getModel().getDataBase().getTempPeltier());
+
+			else if (!getModel().isNeedToDrawTempInt() && !getModel().isNeedToDrawTempExt() && !getModel().isNeedToDrawTempPeltier() && getModel().isNeedToDrawTempSetPoint())
+				drawPointerLine(graphics, getModel().getDataBase().getSetPoint());
+
+
+
 		}
 	}
 
@@ -60,50 +72,55 @@ public class CurveBuilder implements Runnable  {
 
 	}
 
-	private void drawPointerLine(Graphics g) {
-		if (getModel().getClickCoordonate() != null && getModel().isDrawPointerLine() && getModel().isNeedToDrawTempInt()) {
+	private void drawPointerLine(Graphics g,ArrayList<Value> datas) {
+		if (getModel().getClickCoordonate() != null && getModel().isDrawPointerLine()) { // && getModel().isNeedToDrawTempInt()
 			Graphics2D g2 = (Graphics2D) g;
 
 			int width = getModel().getGraphicCurve().getSize().getWidth();
 			int height = getModel().getGraphicCurve().getSize().getHeight();
-			int maxTempValue = getModel().getGraphicCurve().getTempMaxValue();
-			int minTempValue = getModel().getGraphicCurve().getTempMinValue();
+			int maxTempValue = getModel().getTempMaxValue();
+			int minTempValue = getModel().getTempMinValue();
 			int coordonateXGraph = getModel().getGraphicCurve().getCoordonate().getX();
 			int coordonateYGraph = getModel().getGraphicCurve().getCoordonate().getY();
-			int sizeDatas = getModel().getDataBase().getTempInt().size();
+			int sizeDatas = datas.size();
 			int coordonatePointerX = getModel().getClickCoordonate().getX()-coordonateXGraph;
 			int coordonatePointerY = getModel().getClickCoordonate().getY();
 
-			ArrayList<Value> datasTempInt = getModel().getDataBase().getTempInt();
-			int elementToGet2 = (int) datasTempInt.get((int) Math.floor(((double) coordonatePointerX )/((float) width / (sizeDatas-1)))).getNumber();
+			ArrayList<String> datasTemps = getModel().getDataBase().getTimes();
+			//int elementToGet2 = (int) datasTempInt.get((int) Math.floor(((double) coordonatePointerX )/((float) width / (sizeDatas-1)))).getNumber();
 			int elementToGet = (int) Math.floor(coordonatePointerX / (width / (sizeDatas-1)));
-			
-			BasicStroke line = new BasicStroke(1.0f);
-			g2.setStroke(line);
-			g2.setColor(Color.LIGHT_GRAY);
 
-			if (Math.floor(((double) coordonatePointerX )/datasTempInt.size()) > 0) {
+			BasicStroke line = new BasicStroke(1.5f);
+			g2.setStroke(line);
+			g2.setColor(Color.BLACK);
+
+			if (Math.floor(((double) coordonatePointerX )/datas.size()) > 0) {
+				//vertical bar
 				g2.drawLine(
 						(int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))),
 						(int)(coordonateYGraph + height),
 						(int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))),
-						(int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))));
-				
+						(int)(coordonateYGraph + height - ((datas.get(elementToGet).getNumber() - minTempValue)  * (height / (maxTempValue - minTempValue)))));
+
+				//horizontal bar
 				g2.drawLine(
 						(int)(coordonateXGraph),
-						(int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))),
+						(int)(coordonateYGraph + height - ((datas.get(elementToGet).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue)))),
 						(int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))),
-						(int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))));
+						(int)(coordonateYGraph + height - ((datas.get(elementToGet).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue)))));
 
-				if ((int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))) <= 0.75 * width)
-					g2.drawString("Température : "+ datasTempInt.get(elementToGet).getNumber(), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))), (int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))) - 15);
-				else 
-					g2.drawString("Température : "+ datasTempInt.get(elementToGet).getNumber(), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))) - 100, (int)(coordonateYGraph + height - (datasTempInt.get(elementToGet).getNumber() * (height / (maxTempValue - minTempValue)))) - 15);
+				if ((int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))) <= 0.75 * width) {
+					g2.drawString("Température : "+ datas.get(elementToGet).getNumber(), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))), (int)(coordonateYGraph + height - ((datas.get(elementToGet).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue)))) - 15);
+					g2.drawString("Temps : "+ datasTemps.get(elementToGet), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))), (int)(coordonateYGraph + height - ((datas.get(elementToGet).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue)))) -5);
+				}
+				else {
+					g2.drawString("Température : "+ datas.get(elementToGet).getNumber(), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))) - 100, (int)(coordonateYGraph + height - ((datas.get(elementToGet).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue)))) - 15);
+					g2.drawString("Temps : "+ datasTemps.get(elementToGet), (int)(coordonateXGraph + elementToGet * ((float) width / (sizeDatas-1))) - 100, (int)(coordonateYGraph + height - ((datas.get(elementToGet).getNumber() - minTempValue) * (height / (maxTempValue - minTempValue)))) - 5);
 
-				
+				}
 			}
-			
-		
+
+
 		}
 	}
 
@@ -111,11 +128,11 @@ public class CurveBuilder implements Runnable  {
 		g.setFont(new Font("calibri",1, 18));
 		g.setColor(Color.black);
 		//max temperature
-		g.drawString(""+getModel().getGraphicCurve().getTempMaxValue(), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY()+10);
+		g.drawString(""+getModel().getTempMaxValue(), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY()+20);
 		//medium temperature
-		g.drawString(""+(getModel().getGraphicCurve().getTempMinValue() + (getModel().getGraphicCurve().getTempMaxValue() - getModel().getGraphicCurve().getTempMinValue()) / 2), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight()/2);
+		g.drawString(""+(getModel().getTempMinValue() + (getModel().getTempMaxValue() - getModel().getTempMinValue()) / 2), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight()/2 +10);
 		//min temperature
-		g.drawString(""+getModel().getGraphicCurve().getTempMinValue(), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight()-5);
+		g.drawString(""+getModel().getTempMinValue(), getModel().getGraphicCurve().getCoordonate().getX() - 25, getModel().getGraphicCurve().getCoordonate().getY() + getModel().getGraphicCurve().getSize().getHeight()-5);
 
 		//time of the first measure
 		g.setFont(new Font("calibri",1, 13));
@@ -161,8 +178,8 @@ public class CurveBuilder implements Runnable  {
 
 		int width = getModel().getGraphicCurve().getSize().getWidth();
 		int height = getModel().getGraphicCurve().getSize().getHeight();
-		int maxTempValue = getModel().getGraphicCurve().getTempMaxValue();
-		int minTempValue = getModel().getGraphicCurve().getTempMinValue();
+		int maxTempValue = getModel().getTempMaxValue();
+		int minTempValue = getModel().getTempMinValue();
 		int coordonateXGraph = getModel().getGraphicCurve().getCoordonate().getX();
 		int coordonateYGraph = getModel().getGraphicCurve().getCoordonate().getY();
 		int sizeDatas = getModel().getDataBase().getTempInt().size();
@@ -177,7 +194,7 @@ public class CurveBuilder implements Runnable  {
 			g2.setColor(Color.GREEN);
 			line = new BasicStroke(getModel().getGraphicCurve().getSetPointThickness());
 			g2.setStroke(line);
-			drawSetPoint(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue);
+			drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, getModel().getDataBase().getSetPoint());
 		}
 
 		//draw TempExt
@@ -204,6 +221,7 @@ public class CurveBuilder implements Runnable  {
 			g2.setStroke(line);
 			drawCurve(g2, coordonateXGraph, coordonateYGraph, width, height, maxTempValue, minTempValue, datasTempInt);
 		}
+
 
 
 

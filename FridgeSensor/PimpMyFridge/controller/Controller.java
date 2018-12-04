@@ -30,7 +30,11 @@ public class Controller {
 				CurvesManagement.checkCurvesToDraw();
 				actualizeJPanelObserver();
 				getModel().getDewPoint();
-				rxtx.writeData((int) getModel().getSetPoint());
+				if (getModel().isNeedToSendSetPoint()) {
+					getModel().setNeedToSendSetPoint(false);
+					rxtx.writeData((int) getModel().getSetPoint());
+				}
+				checkValuesSize();
 				Thread.sleep(100);
 
 
@@ -49,12 +53,6 @@ public class Controller {
 
 	private void actualizeTempPanel() {
 		getModel().getTempLabel().setText(""+getModel().getTempInt());
-		if (getModel().getTempInt() >= getModel().getSetPoint() * 0.95 && getModel().getTempInt() <= getModel().getSetPoint() * 1.05) {
-			getModel().getTempLabel().setForeground(new Color(18, 96, 61));
-		}
-		else {
-			getModel().getTempLabel().setForeground(new Color(198, 23, 47));
-		}
 		
 	}
 
@@ -79,6 +77,24 @@ public class Controller {
 		else {
 			getModel().getDoorOpenLabel().setText("Aucune Anomalie");
 			getModel().getDoorOpenLabel().setForeground(new Color(18, 96, 61));
+		}
+	}
+	
+	public void checkValuesSize() {
+		if (getModel().getDataBase().getTempInt().size() >= getModel().getMaxValuesOnGraph()) {
+			getModel().getDataBase().getTempInt().remove(0);
+		}
+		if (getModel().getDataBase().getTempExt().size() >= getModel().getMaxValuesOnGraph()) {
+			getModel().getDataBase().getTempExt().remove(0);
+		}
+		if (getModel().getDataBase().getTempPeltier().size() >= getModel().getMaxValuesOnGraph()) {
+			getModel().getDataBase().getTempPeltier().remove(0);
+		}
+		if (getModel().getDataBase().getSetPoint().size() >= getModel().getMaxValuesOnGraph()) {
+			getModel().getDataBase().getSetPoint().remove(0);
+		}
+		if (getModel().getDataBase().getTimes().size() >= getModel().getMaxValuesOnGraph()) {
+			getModel().getDataBase().getTimes().remove(0);
 		}
 	}
 

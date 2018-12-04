@@ -1,6 +1,5 @@
-/DB.class
-/Rxtx.class
-/Model.class
+/CurveBuilder.class
+/Frame.class
 /FrameBuilder$1.class
 /FrameBuilder.class
-/Controller.class
+/View.class

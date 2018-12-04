@@ -11,11 +11,12 @@ public class Model extends Observable{
 	private float setPoint = 15;
 	private int tempMaxValue = 30;
 	private int tempMinValue = 0;
+	private int maxValuesOnGraph = 50;
 	private boolean doorOpen;
 	private boolean condensation;
 	private boolean riskCondensation;
 	private DB dataBase = new DB();
-	private GraphicCurve graphicCurve = new GraphicCurve(new Coordonate(30, 30), new Size(500,350));
+	private GraphicCurve graphicCurve = new GraphicCurve(new Coordonate(30, 30), new Size(650,350));
 	//private boolean needActualize = false;
 	private boolean needToDrawTempInt = true;
 	private boolean needToDrawTempExt = true;
@@ -23,6 +24,7 @@ public class Model extends Observable{
 	private boolean needToDrawTempSetPoint = true;
 	private Coordonate clickCoordonate;
 	private boolean drawPointerLine = false;
+	private boolean needToSendSetPoint = false;
 	
 	Checkbox interieurCheckBox = new Checkbox("Température intérieure", true);
 	Checkbox exterieurCheckBox = new Checkbox("Température extérieure", true);
@@ -83,6 +85,7 @@ public class Model extends Observable{
 	}
 
 	public void setSetPoint(float setPoint) {
+		//getDataBase().addSetPoint(new Value(setPoint));
 		this.setPoint = setPoint;
 	}
 
@@ -238,6 +241,22 @@ public class Model extends Observable{
 
 	public void setCondensationLabelAlert(JLabel condensationLabelAlert) {
 		this.condensationLabelAlert = condensationLabelAlert;
+	}
+	
+	
+
+	public boolean isNeedToSendSetPoint() {
+		return needToSendSetPoint;
+	}
+
+	public void setNeedToSendSetPoint(boolean needToSendSetPoint) {
+		this.needToSendSetPoint = needToSendSetPoint;
+	}
+	
+	
+
+	public int getMaxValuesOnGraph() {
+		return maxValuesOnGraph;
 	}
 
 	public int getDewPoint() {

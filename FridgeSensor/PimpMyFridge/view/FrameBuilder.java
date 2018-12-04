@@ -214,7 +214,7 @@ public class FrameBuilder {
 		p.setBackground(new Color(255, 211, 96));
 		p.setPreferredSize(new Dimension(300,125));
 		
-		JLabel label1 = new JLabel("Dysfonctionnements constatés :");
+		JLabel label1 = new JLabel("Dysfonctionnements constatés");
 		label1.setFont(new Font("Arial", Font.BOLD, 18));
 		
 		JLabel label2 = getModel().getDoorOpenLabel();
@@ -240,7 +240,7 @@ public class FrameBuilder {
 		JPanel p = new JPanel();
 		//p.setLayout(new BorderLayout(5,5));
 		p.setBackground(Color.WHITE);
-		p.setPreferredSize(new Dimension(600,600));
+		p.setPreferredSize(new Dimension(800,600));
 		
 		
 		p.add(createCurvesDisplay());
@@ -262,7 +262,7 @@ public class FrameBuilder {
 	private static JPanelObserverDraw createCurvesDisplay() {
 		JPanelObserverDraw p = new JPanelObserverDraw(getGraphicsBuilder());
 		getObservable().addObserver(p);
-		p.setPreferredSize(new Dimension(550,410));
+		p.setPreferredSize(new Dimension(750,410));
 		p.setCursor(new Cursor(1));
 		p.addMouseListener(new ClickListener(getModel()));
 		return p;
@@ -272,7 +272,7 @@ public class FrameBuilder {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(4, 1));
 		p.setBackground(Color.WHITE);
-		p.setPreferredSize(new Dimension(350,60));
+		p.setPreferredSize(new Dimension(750,60));
 
 		p.add(getModel().exterieurCheckBox);
 		p.add(getModel().interieurCheckBox);
@@ -292,7 +292,7 @@ public class FrameBuilder {
 		labelLegend.setIcon(icon);
 		
 		p.setBackground(Color.WHITE);
-		p.setPreferredSize(new Dimension(50,150));
+		p.setPreferredSize(new Dimension(750,150));
 		p.add(labelLegend);
 		
 		return p;
